@@ -336,29 +336,31 @@ jobs:
               print('No files changed')
           "
 
-      - name: Final Summary
+            - name: Final Summary
         if: always()
         uses: actions/github-script@v7
         with:
           script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-                            body: `## 🤖 AI Analysis Complete!
-
-              **Analysis performed using cloud services:**
-
-              - 🤖 Hugging Face Inference API
-              - ☁️ Replicate API
-              - 🏠 Local AI services (if available)
-              - 📊 Enhanced pattern-based analysis
-
-              **To enable more AI services:**
-              1. Add \`HUGGINGFACE_API_KEY\` secret for Hugging Face
-              2. Add \`REPLICATE_API_KEY\` secret for Replicate
-              3. Run local AI services (Ollama, etc.)
-
-              ---
-              *AI-powered code review*`
-            });
+            try {
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: '## 🤖 AI Analysis Complete!\\n\\n**Analysis performed using cloud services:**\\n\\n- 🤖 Hugging Face Inference API\\n- ☁️ Replicate API\\n- 🏠 Local AI services (if available)\\n- 📊 Enhanced pattern-based analysis\\n\\n**To enable more AI services:**\\n1. Add `HUGGINGFACE_API_KEY` secret for Hugging Face\\n2. Add `REPLICATE_API_KEY` secret for Replicate\\n3. Run local AI services (Ollama, etc.)\\n\\n---\\n*AI-powered code review*'
+              });
+              console.log('Summary comment posted successfully');
+            } catch (error) {
+              console.log('Failed to post summary comment:', error.message);
+              // Fallback: try to post to PR instead of issue
+              try {
+                await github.rest.pulls.createReviewComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: context.issue.number,
+                  body: '## 🤖 AI Analysis Complete!\\n\\n**Analysis performed using cloud services:**\\n\\n- 🤖 Hugging Face Inference API\\n- ☁️ Replicate API\\n- 🏠 Local AI services (if available)\\n- 📊 Enhanced pattern-based analysis\\n\\n---\\n*AI-powered code review*'
+                });
+                console.log('PR comment posted successfully');
+              } catch (prError) {
+                console.log('Failed to post PR comment:', prError.message);
+              }
+            }
