@@ -1,4 +1,4 @@
-name: AI Basic Analysis
+name: AI Simple Analysis
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
     types: [ opened, synchronize, reopened ]
 
 jobs:
-  ai-basic:
+  ai-simple:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -22,7 +22,7 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Basic Code Analysis
+      - name: Simple Code Analysis
         run: |
           python -c "
           import subprocess
