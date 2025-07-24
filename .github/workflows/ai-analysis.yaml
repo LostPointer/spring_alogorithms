@@ -1,4 +1,4 @@
-name: AI Free Analysis
+name: AI Analysis
 
 on:
   pull_request:
@@ -6,12 +6,14 @@ on:
     types: [ opened, synchronize, reopened ]
 
 jobs:
-  free-ai-analysis:
+  ai-analysis:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: write
+      issues: write
       actions: read
+      id-token: write
 
     steps:
       - name: Checkout code
@@ -371,9 +373,9 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `## 🤖 Free AI Analysis Complete!
+                            body: `## 🤖 AI Analysis Complete!
 
-              **Analysis performed using free tools:**
+              **Analysis performed using AI tools:**
 
               - ✅ Basic code quality analysis
               - 🔒 Security vulnerability check
@@ -382,8 +384,8 @@ jobs:
               **To enable advanced AI analysis:**
               1. Install Ollama locally and run: \`ollama run codellama:7b\`
               2. Or add Hugging Face API key as \`HUGGINGFACE_API_KEY\` secret
-              3. Or use cloud-based free AI services
+              3. Or use cloud-based AI services
 
               ---
-              *Powered by free AI tools*`
+              *Powered by AI tools*`
             });

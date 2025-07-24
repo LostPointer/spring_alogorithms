@@ -1,4 +1,4 @@
-name: AI Cloud Free Analysis
+name: AI Cloud Analysis
 
 on:
   pull_request:
@@ -6,12 +6,14 @@ on:
     types: [ opened, synchronize, reopened ]
 
 jobs:
-  cloud-free-analysis:
+  cloud-analysis:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: write
+      issues: write
       actions: read
+      id-token: write
 
     steps:
       - name: Checkout code
@@ -343,9 +345,9 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `## 🆓 Free AI Analysis Complete!
+                            body: `## 🤖 AI Analysis Complete!
 
-              **Analysis performed using free cloud services:**
+              **Analysis performed using cloud services:**
 
               - 🤖 Hugging Face Inference API
               - ☁️ Replicate API
@@ -358,5 +360,5 @@ jobs:
               3. Run local AI services (Ollama, etc.)
 
               ---
-              *100% free AI-powered code review*`
+              *AI-powered code review*`
             });
