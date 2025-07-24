@@ -1,4 +1,4 @@
-name: AI CLI Analysis
+name: AI CLI Analysis (Fixed)
 
 on:
   pull_request:

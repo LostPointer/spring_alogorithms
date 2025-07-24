@@ -48,6 +48,13 @@ mv .github/workflows/ai-analysis.yaml .github/workflows/ai-analysis-simple.yaml
 mv .github/workflows/ai-basic.yaml .github/workflows/ai-analysis.yaml
 ```
 
+### Вариант 2: GitHub CLI (исправлено)
+```bash
+# Используйте исправленную версию ai-cli-fixed.yaml
+mv .github/workflows/ai-analysis.yaml .github/workflows/ai-analysis-simple.yaml
+mv .github/workflows/ai-cli-fixed.yaml .github/workflows/ai-analysis.yaml
+```
+
 ### Вариант 2: Настройка разрешений
 Если хотите комментарии, настройте разрешения:
 1. GitHub репозиторий → Settings → Actions → General
